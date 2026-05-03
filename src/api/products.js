@@ -24,11 +24,3 @@ export async function deleteProduct(id) {
   await api.delete(`/api/products/${id}`);
 }
 
-export async function uploadProductImage(file) {
-  const formData = new FormData();
-  formData.append('image', file);
-  const { data } = await api.post('/api/products/images', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  });
-  return data;
-}

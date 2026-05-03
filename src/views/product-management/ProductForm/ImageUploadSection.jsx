@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 import { IconUpload, IconX } from '@tabler/icons-react';
 
-import * as productsApi from 'api/products';
+import * as filesApi from 'api/files';
 
 export default function ImageUploadSection({ imageIds = [], imagePreviews = [], onChange, error }) {
   const [uploading, setUploading] = useState(false);
@@ -20,8 +20,11 @@ export default function ImageUploadSection({ imageIds = [], imagePreviews = [], 
 
     setUploading(true);
     try {
-      const image = await productsApi.uploadProductImage(file);
-      onChange([...imageIds, image.id], [...imagePreviews, { id: image.id, url: image.url, name: image.name }]);
+      const image = await filesApi.uploadFile(file);
+      onChange(
+        [...imageIds, image.id],
+        [...imagePreviews, { id: image.id, url: filesApi.getFileUrl(image.id), name: image.originalFilename }]
+      );
     } catch {
       // Silently fail — could add error state if needed
     } finally {

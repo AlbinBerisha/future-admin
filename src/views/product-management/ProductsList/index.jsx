@@ -17,6 +17,7 @@ import { IconEdit, IconTrash, IconPlus } from '@tabler/icons-react';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import * as productsApi from 'api/products';
+import { getFileUrl } from 'api/files';
 import usePermissions from 'hooks/usePermissions';
 import ProductDeleteDialog from './ProductDeleteDialog';
 
@@ -58,9 +59,9 @@ export default function ProductsList() {
       sortable: false,
       filterable: false,
       renderCell: (params) => {
-        const url = params.row.images?.[0]?.url;
-        return url ? (
-          <Avatar src={url} variant="rounded" sx={{ width: 36, height: 36 }} />
+        const imageId = params.row.images?.[0]?.id;
+        return imageId ? (
+          <Avatar src={getFileUrl(imageId)} variant="rounded" sx={{ width: 36, height: 36 }} />
         ) : (
           <Avatar variant="rounded" sx={{ width: 36, height: 36, bgcolor: 'grey.100' }}>
             <Typography variant="caption" color="text.secondary">

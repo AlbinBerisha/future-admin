@@ -26,6 +26,7 @@ import { SUPPORTED_LANGUAGES } from 'config/languages';
 import * as productsApi from 'api/products';
 import * as categoriesApi from 'api/categories';
 import * as storesApi from 'api/stores';
+import { getFileUrl } from 'api/files';
 import ImageUploadSection from './ImageUploadSection';
 import VariantSection from './VariantSection';
 
@@ -91,7 +92,7 @@ function mapProductToFormValues(product) {
     descriptions: product.descriptions || buildInitialNames(),
     categoryId: product.category?.id || '',
     imageIds: (product.images || []).map((img) => img.id),
-    _imagePreviews: (product.images || []).map((img) => ({ id: img.id, url: img.url, name: img.name })),
+    _imagePreviews: (product.images || []).map((img) => ({ id: img.id, url: getFileUrl(img.id), name: img.originalFilename })),
     variants: (product.variants || []).map((v) => ({
       id: v.id,
       price: v.price ?? '',
@@ -103,7 +104,7 @@ function mapProductToFormValues(product) {
       })),
       imageIds: (v.images || []).map((img) => img.id),
       storeIds: (v.stores || []).map((s) => s.id),
-      _imagePreviews: (v.images || []).map((img) => ({ id: img.id, url: img.url, name: img.name }))
+      _imagePreviews: (v.images || []).map((img) => ({ id: img.id, url: getFileUrl(img.id), name: img.originalFilename }))
     }))
   };
 }
