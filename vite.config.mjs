@@ -14,7 +14,15 @@ export default defineConfig(({ mode }) => {
       open: true,
       // this sets a default port to 3000
       port: PORT,
-      host: true
+      host: true,
+      // Dev: proxy /api to the local backend so the app calls same-origin /api/...
+      // exactly as in production (where nginx proxies /api to the backend).
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8085',
+          changeOrigin: true
+        }
+      }
     },
     build: {
       chunkSizeWarningLimit: 1600

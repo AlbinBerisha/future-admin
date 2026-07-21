@@ -8,8 +8,10 @@ export function setAuthDependencies(getToken, onExpired) {
   _onSessionExpired = onExpired;
 }
 
+// baseURL is same-origin /api. nginx (prod) and Vite's dev proxy forward /api
+// to the backend, so the bundle carries no per-environment API URL.
 const api = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL,
+  baseURL: '/api',
   withCredentials: true
 });
 
@@ -30,7 +32,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { data } = await api.get('/api/auth/refresh');
+        const { data } = await api.get('/auth/refresh');
         const newToken = data.jwt;
         _getAccessToken(newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`;

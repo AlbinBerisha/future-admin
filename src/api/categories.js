@@ -1,41 +1,41 @@
 import api from './axios';
 
 export async function getCategories() {
-  const { data } = await api.get('/api/product-categories');
+  const { data } = await api.get('/product-categories');
   return data;
 }
 
 export async function createCategory(categoryData) {
-  const { data } = await api.post('/api/product-categories', categoryData);
+  const { data } = await api.post('/product-categories', categoryData);
   return data;
 }
 
 export async function updateCategory(id, categoryData) {
-  const { data } = await api.put(`/api/product-categories/${id}`, categoryData);
+  const { data } = await api.put(`/product-categories/${id}`, categoryData);
   return data;
 }
 
 export async function deleteCategory(id) {
-  await api.delete(`/api/product-categories/${id}`);
+  await api.delete(`/product-categories/${id}`);
 }
 
 export async function getCategoryFilters(categoryId) {
-  const { data } = await api.get(`/api/product-categories/${categoryId}/product-filters`);
+  const { data } = await api.get(`/product-categories/${categoryId}/product-filters`);
   return data;
 }
 
 export async function createFilter(filterData) {
-  const { data } = await api.post('/api/product-filters', filterData);
+  const { data } = await api.post('/product-filters', filterData);
   return data;
 }
 
 export async function updateFilter(filterId, filterData) {
-  const { data } = await api.put(`/api/product-filters/${filterId}`, filterData);
+  const { data } = await api.put(`/product-filters/${filterId}`, filterData);
   return data;
 }
 
 export async function deleteFilter(filterId) {
-  await api.delete(`/api/product-filters/${filterId}`);
+  await api.delete(`/product-filters/${filterId}`);
 }
 
 export function buildCategoryTree(flatList) {
